@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://www.epam.task04.com/web"
+        xmlns:tns="http://www.epam.task04.com/web">
+    <element name="web-app">
+        <complexType>
+            <sequence>
+                <choice maxOccurs="unbounded">
+                    <element name="display-name" type="string"/>
+                    <element name="welcome-file-list" type="tns:Welcome-file-list"/>
+                    <element name="filter" type="tns:Filter"/>
+                    <element name="filter-mapping" type="tns:Filter-mapping"/>
+                    <element name="listener" type="tns:Listener"/>
+                    <element name="servlet" type="tns:Servlet"/>
+                    <element name="servlet-mapping" type="tns:Servlet-mapping"/>
+                    <element name="error-page" type="tns:Error-page"/>
+                </choice>
+            </sequence>
+            <attribute name="id" type="string" use="required"/>
+            <attribute name="version" type="string" use="required"/>
+        </complexType>
+    </element>
+    <simpleType name="ClassString">
+        <restriction base="string">
+            <pattern value="[a-zA-Z0-9._]+"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="NameString">
+        <restriction base="string">
+            <pattern value="[a-zA-Z0-9_]+"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="UrlString">
+        <restriction base="string">
+            <pattern value="[a-zA-Z0-9._/*]+"/>
+        </restriction>
+    </simpleType>
+    <complexType name="Welcome-file-list">
+        <sequence>
+            <element name="welcome-file" type="tns:Welcome-file" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    <simpleType name="Welcome-file">
+        <restriction base="string">
+            <pattern value="[a-zA-Z0-9]+\.(html|htm|jsp)"/>
+        </restriction>
+    </simpleType>
+    <complexType name="Filter">
+        <sequence>
+            <element name="filter-name" type="tns:NameString"/>
+            <element name="filter-class" type="tns:ClassString"/>
+            <element name="init-param" type="tns:Init-param" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    <complexType name="Init-param">
+        <sequence>
+            <element name="param-name" type="tns:NameString"/>
+            <element name="param-value" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="Filter-mapping">
+        <sequence>
+            <element name="filter-name" type="tns:NameString"/>
+            <element name="url-pattern" type="tns:UrlString"/>
+            <element name="dispatcher" type="tns:Dispatcher"/>
+        </sequence>
+    </complexType>
+    <simpleType name="Dispatcher">
+        <restriction base="string">
+            <enumeration value="REQUEST"/>
+            <enumeration value="INCLUDE"/>
+            <enumeration value="FORWARD"/>
+            <enumeration value="ERROR"/>
+        </restriction>
+    </simpleType>
+    <complexType name="Listener">
+        <sequence>
+            <element name="listener-class" type="tns:ClassString"/>
+        </sequence>
+    </complexType>
+    <complexType name="Servlet">
+        <sequence>
+            <element name="servlet-name" type="tns:NameString"/>
+            <element name="servlet-class" type="tns:ClassString"/>
+            <element name="init-param" type="tns:Init-param" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    <complexType name="Servlet-mapping">
+        <sequence>
+            <element name="servlet-name" type="tns:NameString"/>
+            <element name="url-pattern" type="tns:UrlString"/>
+        </sequence>
+    </complexType>
+    <complexType name="Error-page">
+        <sequence>
+            <choice>
+                <element name="exception-type" type="tns:ClassString"/>
+                <element name="error-code" type="string"/>
+            </choice>
+            <element name="location" type="tns:UrlString"/>
+        </sequence>
+    </complexType>
+</schema>      
