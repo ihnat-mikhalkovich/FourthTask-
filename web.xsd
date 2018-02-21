@@ -16,8 +16,14 @@
                     <element name="error-page" type="tns:Error-page"/>
                 </choice>
             </sequence>
-            <attribute name="id" type="string" use="required"/>
-            <attribute name="version" type="string" use="required"/>
+            <attribute name="id" type="tns:NameString" use="required"/>
+            <attribute name="version" use="required">
+                <simpleType>
+                    <restriction base="string">
+                        <pattern value="[a-zA-Z0-9.]+"/>
+                    </restriction>
+                </simpleType>
+            </attribute>
         </complexType>
     </element>
     <simpleType name="ClassString">
@@ -95,7 +101,7 @@
         <sequence>
             <choice>
                 <element name="exception-type" type="tns:ClassString"/>
-                <element name="error-code" type="string"/>
+                <element name="error-code" type="tns:NameString"/>
             </choice>
             <element name="location" type="tns:UrlString"/>
         </sequence>
