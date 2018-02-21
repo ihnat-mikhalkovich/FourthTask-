@@ -6,7 +6,13 @@
         <complexType>
             <sequence>
                 <choice maxOccurs="unbounded">
-                    <element name="display-name" type="string"/>
+                    <element name="display-name">
+                        <simpleType>
+                            <restriction base="string">
+                                <pattern value="[a-zA-Z0-9. ]+"/>
+                            </restriction>
+                        </simpleType>
+                    </element>
                     <element name="welcome-file-list" type="tns:Welcome-file-list"/>
                     <element name="filter" type="tns:Filter"/>
                     <element name="filter-mapping" type="tns:Filter-mapping"/>
